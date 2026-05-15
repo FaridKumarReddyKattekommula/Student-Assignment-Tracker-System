@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Assignments</h1>
+
+<form method="POST">
+
+    <select name="student_id" required>
+        <option value="">Select Student</option>
+        {% for student in students %}
+        <option value="{{ student.student_id }}">
+            {{ student.student_name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <select name="course_id" required>
+        <option value="">Select Course</option>
+        {% for course in courses %}
+        <option value="{{ course.course_id }}">
+            {{ course.course_name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <input type="text" name="title" placeholder="Assignment Title" required>
+    <input type="date" name="due_date" required>
+    <input type="date" name="submission_date">
+    <input type="number" step="0.01" name="marks" placeholder="Marks">
+
+    <select name="status">
+        <option value="Pending">Pending</option>
+        <option value="Submitted">Submitted</option>
+        <option value="Late">Late</option>
+        <option value="Graded">Graded</option>
+    </select>
+
+    <button type="submit">Add Assignment</button>
+
+</form>
+
+{% if message %}
+<p style="color:red;">{{ message }}</p>
+{% endif %}
+
+<br>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Student</th>
+        <th>Course</th>
+        <th>Title</th>
+        <th>Due Date</th>
+        <th>Submission Date</th>
+        <th>Marks</th>
+        <th>Delay Days</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for assignment in assignments %}
+    <tr>
+        <td>{{ assignment.assignment_id }}</td>
+        <td>{{ assignment.student.student_name }}</td>
+        <td>{{ assignment.course.course_name }}</td>
+        <td>{{ assignment.title }}</td>
+        <td>{{ assignment.due_date }}</td>
+        <td>{{ assignment.submission_date }}</td>
+        <td>{{ assignment.marks }}</td>
+        <td>{{ assignment.delay_days }}</td>
+        <td>{{ assignment.status }}</td>
+        <td>
+            <a href="/delete_assignment/{{ assignment.assignment_id }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

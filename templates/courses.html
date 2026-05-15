@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Courses</h1>
+
+<form method="POST">
+
+    <input type="text" name="course_name" placeholder="Course Name" required>
+
+    <input type="text" name="instructor" placeholder="Instructor" required>
+
+    <button type="submit">Add Course</button>
+
+</form>
+
+{% if message %}
+<p style="color:red;">{{ message }}</p>
+{% endif %}
+
+<br>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>ID</th>
+        <th>Course Name</th>
+        <th>Instructor</th>
+        <th>Created At</th>
+        <th>Action</th>
+    </tr>
+
+    {% for course in courses %}
+
+    <tr>
+        <td>{{ course.course_id }}</td>
+        <td>{{ course.course_name }}</td>
+        <td>{{ course.instructor }}</td>
+        <td>{{ course.created_at }}</td>
+
+        <td>
+            <a href="/edit_course/{{ course.course_id }}">Edit</a>
+            |
+            <a href="/delete_course/{{ course.course_id }}">Delete</a>
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
+
